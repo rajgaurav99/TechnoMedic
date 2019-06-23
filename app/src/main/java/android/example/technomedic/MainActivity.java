@@ -58,7 +58,10 @@ public class MainActivity extends AppCompatActivity {
         diagnose.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                birthyear.setText(""+searchpara.toString());
+                Intent intent = new Intent(MainActivity.this, InformationActivity.class);
+                intent.putExtra("birthyear",Integer.parseInt(birthyear.getText().toString()) );
+                intent.putExtra("symptoms",searchpara.toString());
+                startActivity(intent);
             }
         });
 
