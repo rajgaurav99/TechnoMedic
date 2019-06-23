@@ -1,0 +1,6 @@
+<resources>
+    <string name="app_name">Techno Medic</string>
+    <string name="header">Choose from the folowing symptoms:</string>
+    <string name="diagnose">Diagnose</string>
+    <string name="reset">Reset</string>
+</resources>
