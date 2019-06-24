@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:padding="2dp">
+
+    <androidx.cardview.widget.CardView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:cardCornerRadius="4dp"
+        app:cardElevation="4dp">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/disease_bg"
+            android:padding="8dp">
+
+            <TextView
+                android:id="@+id/disease_name"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="20dp"
+                android:layout_marginTop="10dp"
+                android:text="Disease name"
+                android:textSize="24sp"
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/pro_disease"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/disease_name"
+                android:layout_marginLeft="20dp"
+                android:text="Pro disease name"
+                android:textSize="20sp" />
+
+            <TextView
+                android:id="@+id/accuracy_header"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/pro_disease"
+                android:layout_marginLeft="20dp"
+                android:layout_marginTop="5dp"
+                android:text="Accuracy:" />
+
+            <ProgressBar
+                android:id="@+id/accuracy"
+                style="?android:attr/progressBarStyleHorizontal"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/accuracy_header"
+                android:layout_marginLeft="20dp"
+                android:layout_marginRight="20dp" />
+
+            <TextView
+                android:id="@+id/disease_desc"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/accuracy"
+                android:layout_marginLeft="20dp"
+                android:layout_marginTop="5dp"
+                android:layout_marginRight="20dp"
+                android:text="Disease description" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="20dp"
+                android:text="Specialization:"
+                android:id="@+id/spec_header"
+                android:layout_below="@id/disease_desc"
+                android:layout_marginTop="5dp"/>
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/spec"
+                android:layout_below="@id/spec_header"
+                android:layout_marginLeft="20dp"
+                android:layout_marginRight="20dp"/>
+        </RelativeLayout>
+
+    </androidx.cardview.widget.CardView>
+</LinearLayout>
