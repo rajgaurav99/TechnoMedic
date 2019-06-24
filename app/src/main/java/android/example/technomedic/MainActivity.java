@@ -17,6 +17,7 @@ import java.util.HashSet;
 import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
+    String token;
     public static ArrayList<Symptom> symptomList=new ArrayList<Symptom>();
     public static ArrayList<Symptom> symptomList2=new ArrayList<Symptom>();
     public static HashSet<Integer> searchpara=new HashSet<Integer>();
@@ -28,6 +29,8 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        Intent intent = getIntent();
+        token=intent.getStringExtra("token");
         symptomList.clear();
         birthyear=findViewById(R.id.age);
         diagnose=findViewById(R.id.diagnose);
@@ -61,6 +64,7 @@ public class MainActivity extends AppCompatActivity {
                 Intent intent = new Intent(MainActivity.this, InformationActivity.class);
                 intent.putExtra("birthyear",Integer.parseInt(birthyear.getText().toString()) );
                 intent.putExtra("symptoms",searchpara.toString());
+                intent.putExtra("token",token);
                 startActivity(intent);
             }
         });
