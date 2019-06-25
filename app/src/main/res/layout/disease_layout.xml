@@ -15,7 +15,7 @@
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="@drawable/disease_bg"
+            android:background="@drawable/info_bg"
             android:padding="8dp">
 
             <TextView
@@ -23,8 +23,8 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="20dp"
+                android:layout_marginStart="20dp"
                 android:layout_marginTop="10dp"
-                android:text="Disease name"
                 android:textSize="24sp"
                 android:textStyle="bold" />
 
@@ -34,7 +34,7 @@
                 android:layout_height="wrap_content"
                 android:layout_below="@id/disease_name"
                 android:layout_marginLeft="20dp"
-                android:text="Pro disease name"
+                android:layout_marginStart="20dp"
                 android:textSize="20sp"
                 android:textStyle="italic" />
 
@@ -44,8 +44,8 @@
                 android:layout_height="wrap_content"
                 android:layout_below="@id/pro_disease"
                 android:layout_marginLeft="20dp"
-                android:layout_marginTop="5dp"
-                android:text="Accuracy:" />
+                android:layout_marginStart="20dp"
+                android:layout_marginTop="5dp" />
 
             <ProgressBar
                 android:id="@+id/accuracy"
@@ -63,26 +63,29 @@
                 android:layout_below="@id/accuracy"
                 android:layout_marginLeft="20dp"
                 android:layout_marginTop="5dp"
-                android:layout_marginRight="20dp"
-                android:text="Disease description" />
+                android:layout_marginRight="20dp" />
 
             <TextView
                 android:id="@+id/spec_header"
-                android:layout_width="match_parent"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_below="@id/disease_desc"
                 android:layout_marginLeft="20dp"
+                android:layout_marginStart="20dp"
                 android:layout_marginTop="5dp"
-                android:text="Specialization (Can be cured by):"
+                android:text="@string/spec"
                 android:textSize="18sp"
                 android:textStyle="bold" />
+
             <TextView
+                android:id="@+id/spec"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:id="@+id/spec"
                 android:layout_below="@id/spec_header"
                 android:layout_marginLeft="20dp"
-                android:layout_marginRight="20dp"/>
+                android:layout_marginRight="20dp"
+                android:layout_marginStart="20dp"
+                android:layout_marginEnd="20dp"/>
         </RelativeLayout>
 
     </androidx.cardview.widget.CardView>

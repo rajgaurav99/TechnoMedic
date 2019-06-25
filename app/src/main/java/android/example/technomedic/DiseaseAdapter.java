@@ -37,7 +37,7 @@ public class DiseaseAdapter extends RecyclerView.Adapter<DiseaseAdapter.DiseaseV
         holder.mdesc.setText(disease.getDesc());
         holder.mspec.setText(disease.getSpec());
         holder.mprogressbar.setProgress((int)disease.getAccuracy());
-        holder.macc.setText("Accuracy: "+disease.getAccuracy());
+        holder.macc.setText("Accuracy: "+disease.getAccuracy()+"%");
     }
 
     @Override
