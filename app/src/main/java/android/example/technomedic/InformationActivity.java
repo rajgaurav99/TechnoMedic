@@ -48,7 +48,7 @@ public class InformationActivity extends AppCompatActivity {
         @Override
         protected void onPreExecute() {
             super.onPreExecute();
-            Snackbar snackbar = Snackbar.make(findViewById(R.id.content), "Loading Results", Snackbar.LENGTH_LONG);
+            Snackbar snackbar = Snackbar.make(findViewById(R.id.content), "Loading Results....", Snackbar.LENGTH_LONG);
             snackbar.show();
         }
 
