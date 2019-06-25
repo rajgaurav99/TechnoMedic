@@ -9,6 +9,8 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.RadioButton;
+import android.widget.RadioGroup;
 import android.widget.SearchView;
 import android.widget.TextView;
 
@@ -18,6 +20,7 @@ import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
     String token;
+    String gender="male";
     public static ArrayList<Symptom> symptomList=new ArrayList<Symptom>();
     public static ArrayList<Symptom> symptomList2=new ArrayList<Symptom>();
     public static HashSet<Integer> searchpara=new HashSet<Integer>();
@@ -62,9 +65,10 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(MainActivity.this, InformationActivity.class);
-                intent.putExtra("birthyear",Integer.parseInt(birthyear.getText().toString()) );
+                intent.putExtra("birthyear",""+Integer.parseInt(birthyear.getText().toString()) );
                 intent.putExtra("symptoms",searchpara.toString());
                 intent.putExtra("token",token);
+                intent.putExtra("gender",gender);
                 startActivity(intent);
             }
         });
@@ -78,6 +82,20 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
+    }
+
+    public void onRadioButtonClicked(View view) {
+        boolean checked = ((RadioButton) view).isChecked();
+        switch(view.getId()) {
+            case R.id.male:
+                if (checked)
+                    gender="male";
+                    break;
+            case R.id.female:
+                if (checked)
+                    gender="female";
+                    break;
+        }
     }
 
     public static void setup(){
