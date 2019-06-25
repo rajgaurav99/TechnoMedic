@@ -7,6 +7,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.util.Log;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -23,9 +24,9 @@ import java.util.ArrayList;
 import static android.example.technomedic.MainActivity.symptomList;
 
 public class InformationActivity extends AppCompatActivity {
-    public static ArrayList<Disease> diseaseList=new ArrayList<Disease>();
+    public static  ArrayList<Disease> diseaseList=new ArrayList<Disease>();
     RecyclerView recyclerView;
-    TextView testing;
+    DiseaseAdapter mAdapter;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -35,19 +36,16 @@ public class InformationActivity extends AppCompatActivity {
         String gender=intent.getStringExtra("gender");
         String birthyear=intent.getStringExtra("birthyear");
         String symptoms=intent.getStringExtra("symptoms");
-        testing=findViewById(R.id.testing);
         diseaseList.clear();
+        new FetchData().execute(token,symptoms,gender,birthyear);
         recyclerView=findViewById(R.id.info_recycler);
         recyclerView.setHasFixedSize(true);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
-        diseaseList.add(new Disease("Cold","Common cold",87.87,"Acute nasopharyngitis [common cold]","General practice"));
-        diseaseList.add(new Disease("Cold","Common cold",87.87,"Acute nasopharyngitis [common cold]","General practice"));
-        new FetchData().execute(token,symptoms,gender,birthyear);
-        final DiseaseAdapter mAdapter = new DiseaseAdapter(this,diseaseList);
+        mAdapter = new DiseaseAdapter(this,diseaseList);
         recyclerView.setAdapter(mAdapter);
     }
 
-    public class FetchData extends AsyncTask<String, Void, String> {
+    public class FetchData extends AsyncTask<String, Void, ArrayList<Disease>> {
         boolean flag = true;
         String result = "";
 
@@ -58,15 +56,16 @@ public class InformationActivity extends AppCompatActivity {
         }
 
         @Override
-        protected String doInBackground(String... params) {
+        protected ArrayList<Disease> doInBackground(String... params) {
             ArrayList<Disease> arrayresult=new ArrayList<Disease>();
             String token=params[0];
             String symptoms=params[1];
             String gender=params[2];
             String birthyear=params[3];
+            JSONArray array,object3;
+            JSONObject object1,object2;
             try {
-                JSONArray array,object3;
-                JSONObject object1,object2;
+
                 URL url;
 
 
@@ -81,7 +80,7 @@ public class InformationActivity extends AppCompatActivity {
                         line = bufferedReader.readLine();
                         result = result + line;
                     }
-                    /*
+
                     array= new JSONArray(result);
                     for(int i=0;i<array.length();i++){
                         object1=array.getJSONObject(i);
@@ -93,27 +92,45 @@ public class InformationActivity extends AppCompatActivity {
                         object3=object1.getJSONArray("Specialisation");
                         String spec="";
                         for(int j=0;j<object3.length();j++){
-                            spec+=object3.getJSONObject(i).getString("Name")+" ";
+                            spec+=(j+1)+". "+object3.getJSONObject(j).getString("Name")+"\n";
                         }
                         arrayresult.add(new Disease(name,proname,accuracy,desc,spec));
                     }
-                    return arrayresult;
-                    */
-                    return result;
 
+                     return arrayresult;
                 }
             } catch (Exception e) {
                 e.printStackTrace();
                 flag = false;
             }
-            return result;
+            return arrayresult;
         }
         @Override
-        protected void onPostExecute(String backresult) {
+        protected void onPostExecute(ArrayList<Disease> backresult) {
             super.onPostExecute(backresult);
             if (flag) {
-                //diseaseList.addAll(backresult);
-                testing.setText(backresult);
+                /*JSONArray array,object3;
+                JSONObject object1,object2;
+                try{
+                array= new JSONArray(backresult);
+                for(int i=0;i<array.length();i++){
+                    object1=array.getJSONObject(i);
+                    object2=object1.getJSONObject("Issue");
+                    String name=object2.getString("Name");
+                    String desc=object2.getString("IcdName");
+                    String proname=object2.getString("ProfName");
+                    double accuracy=object2.getDouble("Accuracy");
+                    object3=object1.getJSONArray("Specialisation");
+                    String spec="";
+                    for(int j=0;j<object3.length();j++){
+                        spec+=(j+1)+". "+object3.getJSONObject(j).getString("Name")+"\n";
+                    }
+                    diseaseList.add(new Disease(name,proname,accuracy,desc,spec));
+                }*/
+                diseaseList.addAll(backresult);
+                mAdapter.notifyDataSetChanged();
+
+
             } else {
                 Toast.makeText(getApplicationContext(), "An error occurred", Toast.LENGTH_LONG).show();
             }

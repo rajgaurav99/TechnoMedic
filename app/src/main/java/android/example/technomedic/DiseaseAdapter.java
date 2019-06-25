@@ -37,6 +37,7 @@ public class DiseaseAdapter extends RecyclerView.Adapter<DiseaseAdapter.DiseaseV
         holder.mdesc.setText(disease.getDesc());
         holder.mspec.setText(disease.getSpec());
         holder.mprogressbar.setProgress((int)disease.getAccuracy());
+        holder.macc.setText("Accuracy: "+disease.getAccuracy());
     }
 
     @Override
@@ -56,7 +57,7 @@ public class DiseaseAdapter extends RecyclerView.Adapter<DiseaseAdapter.DiseaseV
 
     class DiseaseViewHolder extends RecyclerView.ViewHolder {
 
-        TextView mname,mproname,mdesc,mspec;
+        TextView mname,mproname,mdesc,mspec,macc;
         ProgressBar mprogressbar;
         public DiseaseViewHolder(View itemView) {
             super(itemView);
@@ -65,6 +66,7 @@ public class DiseaseAdapter extends RecyclerView.Adapter<DiseaseAdapter.DiseaseV
             mdesc=itemView.findViewById(R.id.disease_desc);
             mspec=itemView.findViewById(R.id.spec);
             mprogressbar=itemView.findViewById(R.id.accuracy);
+            macc=itemView.findViewById(R.id.accuracy_header);
 
         }
     }

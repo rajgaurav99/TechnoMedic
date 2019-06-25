@@ -35,7 +35,8 @@
                 android:layout_below="@id/disease_name"
                 android:layout_marginLeft="20dp"
                 android:text="Pro disease name"
-                android:textSize="20sp" />
+                android:textSize="20sp"
+                android:textStyle="italic" />
 
             <TextView
                 android:id="@+id/accuracy_header"
@@ -66,13 +67,15 @@
                 android:text="Disease description" />
 
             <TextView
+                android:id="@+id/spec_header"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="20dp"
-                android:text="Specialization:"
-                android:id="@+id/spec_header"
                 android:layout_below="@id/disease_desc"
-                android:layout_marginTop="5dp"/>
+                android:layout_marginLeft="20dp"
+                android:layout_marginTop="5dp"
+                android:text="Specialization (Can be cured by):"
+                android:textSize="18sp"
+                android:textStyle="bold" />
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
