@@ -65,10 +65,7 @@ public class InformationActivity extends AppCompatActivity {
             JSONArray array,object3;
             JSONObject object1,object2;
             try {
-
                 URL url;
-
-
                 url=new URL("https://healthservice.priaid.ch/diagnosis?symptoms="+symptoms+"&gender="+gender+"&year_of_birth="+birthyear+"&token="+token+"&format=json&language=en-gb");                HttpURLConnection httpURLConnection = (HttpURLConnection) url.openConnection();
                 if (httpURLConnection.getResponseCode() != 200) {
                     flag = false;
@@ -109,28 +106,8 @@ public class InformationActivity extends AppCompatActivity {
         protected void onPostExecute(ArrayList<Disease> backresult) {
             super.onPostExecute(backresult);
             if (flag) {
-                /*JSONArray array,object3;
-                JSONObject object1,object2;
-                try{
-                array= new JSONArray(backresult);
-                for(int i=0;i<array.length();i++){
-                    object1=array.getJSONObject(i);
-                    object2=object1.getJSONObject("Issue");
-                    String name=object2.getString("Name");
-                    String desc=object2.getString("IcdName");
-                    String proname=object2.getString("ProfName");
-                    double accuracy=object2.getDouble("Accuracy");
-                    object3=object1.getJSONArray("Specialisation");
-                    String spec="";
-                    for(int j=0;j<object3.length();j++){
-                        spec+=(j+1)+". "+object3.getJSONObject(j).getString("Name")+"\n";
-                    }
-                    diseaseList.add(new Disease(name,proname,accuracy,desc,spec));
-                }*/
                 diseaseList.addAll(backresult);
                 mAdapter.notifyDataSetChanged();
-
-
             } else {
                 Toast.makeText(getApplicationContext(), "An error occurred", Toast.LENGTH_LONG).show();
             }
