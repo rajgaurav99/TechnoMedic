@@ -14,6 +14,8 @@ import android.widget.RadioGroup;
 import android.widget.SearchView;
 import android.widget.TextView;
 
+import com.google.android.material.snackbar.Snackbar;
+
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
@@ -64,12 +66,22 @@ public class MainActivity extends AppCompatActivity {
         diagnose.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(MainActivity.this, InformationActivity.class);
-                intent.putExtra("birthyear",""+Integer.parseInt(birthyear.getText().toString()) );
-                intent.putExtra("symptoms",searchpara.toString());
-                intent.putExtra("token",token);
-                intent.putExtra("gender",gender);
-                startActivity(intent);
+                if(searchpara.size()==0){
+                    Snackbar snackbar = Snackbar.make(findViewById(R.id.main_activity), "No symptoms selected", Snackbar.LENGTH_LONG);
+                    snackbar.show();
+                }
+                else if(Integer.parseInt(birthyear.getText().toString())<1900 || Integer.parseInt(birthyear.getText().toString())>2019){
+                    Snackbar snackbar = Snackbar.make(findViewById(R.id.main_activity), "Invalid Birthyear", Snackbar.LENGTH_LONG);
+                    snackbar.show();
+                }
+                else{
+                    Intent intent = new Intent(MainActivity.this, InformationActivity.class);
+                    intent.putExtra("birthyear",""+Integer.parseInt(birthyear.getText().toString()) );
+                    intent.putExtra("symptoms",searchpara.toString());
+                    intent.putExtra("token",token);
+                    intent.putExtra("gender",gender);
+                    startActivity(intent);
+                }
             }
         });
 
