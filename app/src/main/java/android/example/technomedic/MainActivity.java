@@ -72,7 +72,6 @@ public class MainActivity extends AppCompatActivity {
 
             @Override
             public boolean onQueryTextChange(String newText) {
-                setup();
                 mAdapter.filter(newText);
                 return false;
             }
@@ -93,6 +92,7 @@ public class MainActivity extends AppCompatActivity {
         reset.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                symptomList2.clear();
                 searchpara.clear();
                 finish();
                 startActivity(getIntent());
@@ -116,6 +116,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public static void setup(){
+        symptomList.clear();
         symptomList.add(new Symptom("Abdominal guarding",188));
         symptomList.add(new Symptom("Abdominal pain",10));
         symptomList.add(new Symptom("Abdominal pain associated with menstruation",223));
