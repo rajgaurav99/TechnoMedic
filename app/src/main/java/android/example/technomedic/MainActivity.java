@@ -80,12 +80,22 @@ public class MainActivity extends AppCompatActivity {
         diagnose.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(MainActivity.this, InformationActivity.class);
-                intent.putExtra("birthyear",""+(Calendar.getInstance().get(Calendar.YEAR)-Integer.parseInt(birthyear.getText().toString())));
-                intent.putExtra("symptoms",searchpara.toString());
-                intent.putExtra("token",token);
-                intent.putExtra("gender",gender);
-                startActivity(intent);
+                String age=birthyear.getText().toString();
+                    if(age.isEmpty()){
+                        Toast.makeText(getApplicationContext(), "Please enter/check age", Toast.LENGTH_LONG).show();
+                    }
+                    else if(searchpara.size()==0){
+                        Toast.makeText(getApplicationContext(), "Please enter symptoms", Toast.LENGTH_LONG).show();
+                    }
+                    else{
+                        int birthyeardata=Calendar.getInstance().get(Calendar.YEAR)-Integer.parseInt(age);
+                        Intent intent = new Intent(MainActivity.this, InformationActivity.class);
+                        intent.putExtra("birthyear",""+birthyeardata);
+                        intent.putExtra("symptoms",searchpara.toString());
+                        intent.putExtra("token",token);
+                        intent.putExtra("gender",gender);
+                        startActivity(intent);
+                    }
             }
         });
 
