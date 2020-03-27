@@ -3,6 +3,8 @@ package android.example.technomedic;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+
+import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
@@ -32,7 +34,8 @@ public class InformationActivity extends AppCompatActivity {
         String birthyear=intent.getStringExtra("birthyear");
         String symptoms=intent.getStringExtra("symptoms");
         diseaseList.clear();
-        new FetchData().execute(token,symptoms,gender,birthyear);
+        FetchData task = new FetchData(InformationActivity.this);
+        task.execute(token,symptoms,gender,birthyear);
         recyclerView=findViewById(R.id.info_recycler);
         recyclerView.setHasFixedSize(true);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
@@ -43,13 +46,17 @@ public class InformationActivity extends AppCompatActivity {
     public class FetchData extends AsyncTask<String, Void, ArrayList<Disease>> {
         boolean flag = true;
         String result = "";
+        private ProgressDialog dialog;
 
+        public FetchData(InformationActivity activity) {
+            dialog = new ProgressDialog(activity);
+        }
 
         @Override
         protected void onPreExecute() {
             super.onPreExecute();
-            Snackbar snackbar = Snackbar.make(findViewById(R.id.content), "Loading Results....", Snackbar.LENGTH_LONG);
-            snackbar.show();
+            dialog.setMessage("Loading results");
+            dialog.show();
         }
 
         @Override
@@ -63,7 +70,8 @@ public class InformationActivity extends AppCompatActivity {
             JSONObject object1,object2;
             try {
                 URL url;
-                url=new URL("https://healthservice.priaid.ch/diagnosis?symptoms="+symptoms+"&gender="+gender+"&year_of_birth="+birthyear+"&token="+token+"&format=json&language=en-gb");                HttpURLConnection httpURLConnection = (HttpURLConnection) url.openConnection();
+                url=new URL("https://healthservice.priaid.ch/diagnosis?symptoms="+symptoms+"&gender="+gender+"&year_of_birth="+birthyear+"&token="+token+"&format=json&language=en-gb");
+                HttpURLConnection httpURLConnection = (HttpURLConnection) url.openConnection();
                 if (httpURLConnection.getResponseCode() != 200) {
                     flag = false;
                 } else {
@@ -102,6 +110,9 @@ public class InformationActivity extends AppCompatActivity {
         @Override
         protected void onPostExecute(ArrayList<Disease> backresult) {
             super.onPostExecute(backresult);
+            if (dialog.isShowing()) {
+                dialog.dismiss();
+            }
             if (flag) {
                 diseaseList.addAll(backresult);
                 mAdapter.notifyDataSetChanged();

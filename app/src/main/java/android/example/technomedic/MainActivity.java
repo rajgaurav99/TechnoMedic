@@ -4,7 +4,9 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.app.ProgressDialog;
 import android.content.Intent;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -13,14 +15,27 @@ import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.SearchView;
 import android.widget.TextView;
+import android.widget.Toast;
 
+import com.google.android.material.snackbar.Snackbar;
+
+import org.json.JSONArray;
+import org.json.JSONObject;
+
+import java.io.BufferedReader;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.net.HttpURLConnection;
+import java.net.URL;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.HashSet;
 import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
-    String token;
+    static String token;
     String gender="male";
+
     public static ArrayList<Symptom> symptomList=new ArrayList<Symptom>();
     public static ArrayList<Symptom> symptomList2=new ArrayList<Symptom>();
     public static HashSet<Integer> searchpara=new HashSet<Integer>();
@@ -32,8 +47,10 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        Intent intent = getIntent();
-        token=intent.getStringExtra("token");
+        if(token==null){
+            FetchData task = new FetchData(MainActivity.this);
+            task.execute();
+        }
         symptomList.clear();
         birthyear=findViewById(R.id.age);
         diagnose=findViewById(R.id.diagnose);
@@ -65,7 +82,7 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(MainActivity.this, InformationActivity.class);
-                intent.putExtra("birthyear",""+Integer.parseInt(birthyear.getText().toString()) );
+                intent.putExtra("birthyear",""+(Calendar.getInstance().get(Calendar.YEAR)-Integer.parseInt(birthyear.getText().toString())));
                 intent.putExtra("symptoms",searchpara.toString());
                 intent.putExtra("token",token);
                 intent.putExtra("gender",gender);
@@ -380,5 +397,69 @@ public class MainActivity extends AppCompatActivity {
         symptomList.add(new Symptom("Wound",187));
         symptomList.add(new Symptom("Yellow colored skin",105));
         symptomList.add(new Symptom("Yellowish discoloration of the white part of the eye",106));
+    }
+
+    public class FetchData extends AsyncTask<Void, Void, String> {
+        boolean flag = true;
+        String result = "";
+        private ProgressDialog dialog;
+
+        public FetchData(MainActivity activity) {
+            dialog = new ProgressDialog(activity);
+        }
+
+        @Override
+        protected void onPreExecute() {
+            super.onPreExecute();
+            dialog.setMessage("Acquiring Token from Server");
+            dialog.show();
+        }
+
+        @Override
+        protected String doInBackground(Void... params) {
+            JSONObject object1;
+            try {
+                URL url;
+                url=new URL("https://authservice.priaid.ch/login");
+                HttpURLConnection httpURLConnection = (HttpURLConnection) url.openConnection();
+                httpURLConnection.setRequestMethod("POST");
+                httpURLConnection.setRequestProperty ("Authorization", "Bearer "+"w2A5E_GMAIL_COM_AUT:QjTcb4ukdxjyblwlvI17Bw==");
+                if (httpURLConnection.getResponseCode() != 200) {
+                    flag = false;
+                } else {
+                    InputStream inputStream = httpURLConnection.getInputStream();
+                    BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(inputStream));
+                    String line = "";
+                    while (line != null) {
+                        line = bufferedReader.readLine();
+                        result = result + line;
+                    }
+                    object1= new JSONObject(result);
+                    result= object1.getString("Token");
+                    return result;
+                }
+            } catch (Exception e) {
+                e.printStackTrace();
+                Snackbar snackbar = Snackbar.make(findViewById(R.id.content), e.toString(), Snackbar.LENGTH_LONG);
+                snackbar.show();
+                flag = false;
+            }
+            return result;
+        }
+        @Override
+        protected void onPostExecute(String result) {
+            super.onPostExecute(result);
+            if (dialog.isShowing()) {
+                dialog.dismiss();
+            }
+            if (flag) {
+                token=result;
+                Snackbar snackbar = Snackbar.make(findViewById(R.id.content), "Token Successfully Acquired", Snackbar.LENGTH_LONG);
+                snackbar.show();
+            } else {
+                Toast.makeText(getApplicationContext(), "An error occurred", Toast.LENGTH_LONG).show();
+            }
+        }
+
     }
 }

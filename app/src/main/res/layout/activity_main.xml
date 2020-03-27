@@ -2,14 +2,16 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/content"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
+    android:gravity="center"
     android:orientation="vertical"
     android:padding="8dp"
-    tools:context=".MainActivity"
-    android:gravity="center">
+    tools:context=".MainActivity">
 
     <SearchView
+        android:layout_margin="10px"
         android:id="@+id/search_bar"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -23,16 +25,20 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:ems="10"
-        android:hint="Enter your Birthyear"
-        android:inputType="number" />
+        android:hint="Enter your Age"
+        android:inputType="number"
+        android:layout_margin="10px"/>
+
 
     <RadioGroup
+        android:layout_margin="10px"
         android:id="@+id/radiogroup"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal">
 
         <TextView
+            android:layout_margin="5px"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Select your gender:"
@@ -45,19 +51,20 @@
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:checked="true"
-            android:text="Male"
-            android:onClick="onRadioButtonClicked"/>
+            android:onClick="onRadioButtonClicked"
+            android:text="Male" />
 
         <RadioButton
             android:id="@+id/female"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:text="Female"
-            android:onClick="onRadioButtonClicked"/>
+            android:onClick="onRadioButtonClicked"
+            android:text="Female" />
     </RadioGroup>
 
     <TextView
+        android:layout_margin="10px"
         android:id="@+id/header"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -68,6 +75,7 @@
         android:textSize="18sp" />
 
     <RelativeLayout
+        android:layout_margin="10px"
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
 
@@ -80,29 +88,27 @@
             android:saveEnabled="true" />
 
 
-
-
-    <LinearLayout
-        android:id="@+id/button_container"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:gravity="center"
-        android:layout_alignParentBottom="true">
-
-        <Button
-            android:id="@+id/reset"
-            android:layout_width="0dp"
+        <LinearLayout
+            android:id="@+id/button_container"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:text="@string/reset" />
+            android:layout_alignParentBottom="true"
+            android:gravity="center">
 
-        <Button
-            android:id="@+id/diagnose"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:text="@string/diagnose" />
-    </LinearLayout>
+            <Button
+                android:id="@+id/reset"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="@string/reset" />
+
+            <Button
+                android:id="@+id/diagnose"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="@string/diagnose" />
+        </LinearLayout>
     </RelativeLayout>
 
 </LinearLayout>
