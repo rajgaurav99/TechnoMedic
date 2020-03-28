@@ -23,7 +23,6 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="20dp"
-                android:layout_marginLeft="20dp"
                 android:layout_marginTop="10dp"
                 android:textSize="24sp"
                 android:textStyle="bold" />
@@ -34,7 +33,6 @@
                 android:layout_height="wrap_content"
                 android:layout_below="@id/disease_name"
                 android:layout_marginStart="20dp"
-                android:layout_marginLeft="20dp"
                 android:textSize="20sp"
                 android:textStyle="italic" />
 
@@ -44,7 +42,6 @@
                 android:layout_height="wrap_content"
                 android:layout_below="@id/pro_disease"
                 android:layout_marginStart="20dp"
-                android:layout_marginLeft="20dp"
                 android:layout_marginTop="5dp" />
 
             <ProgressBar
@@ -71,7 +68,6 @@
                 android:layout_height="wrap_content"
                 android:layout_below="@id/disease_desc"
                 android:layout_marginStart="20dp"
-                android:layout_marginLeft="20dp"
                 android:layout_marginTop="5dp"
                 android:text="@string/spec"
                 android:textSize="18sp"

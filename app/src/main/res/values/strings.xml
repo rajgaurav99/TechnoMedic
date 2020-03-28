@@ -1,7 +1,11 @@
 <resources>
     <string name="app_name">Techno Medic</string>
-    <string name="header">Choose from the folowing symptoms:</string>
+    <string name="header">Choose from the following symptoms:</string>
     <string name="diagnose">Diagnose</string>
     <string name="reset">Reset</string>
     <string name="spec">Specialization (Can be cured by):</string>
+    <string name="female">Female</string>
+    <string name="male">Male</string>
+    <string name="select_gender">Select your gender:</string>
+    <string name="select_age">Enter your Age</string>
 </resources>

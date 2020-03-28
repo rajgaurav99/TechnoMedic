@@ -1,11 +1,11 @@
 package android.example.technomedic;
 
-public class Disease {
-    String name;
-    String pro_name;
-    double accuracy;
-    String desc;
-    String spec;
+class Disease {
+    private final String name;
+    private final String pro_name;
+    private final double accuracy;
+    private final String desc;
+    private final String spec;
 
     public Disease(String name,String pro_name,double accuracy,String desc,String spec){
         this.name=name;

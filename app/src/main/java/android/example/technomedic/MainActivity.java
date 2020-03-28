@@ -4,22 +4,20 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.annotation.SuppressLint;
 import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.RadioButton;
-import android.widget.RadioGroup;
 import android.widget.SearchView;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.android.material.snackbar.Snackbar;
 
-import org.json.JSONArray;
 import org.json.JSONObject;
 
 import java.io.BufferedReader;
@@ -30,15 +28,15 @@ import java.net.URL;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.HashSet;
-import java.util.List;
 
+@SuppressWarnings("ALL")
 public class MainActivity extends AppCompatActivity {
     static String token;
     String gender="male";
 
-    public static ArrayList<Symptom> symptomList=new ArrayList<Symptom>();
-    public static ArrayList<Symptom> symptomList2=new ArrayList<Symptom>();
-    public static HashSet<Integer> searchpara=new HashSet<Integer>();
+    public static ArrayList<Symptom> symptomList=new ArrayList<>();
+    public static ArrayList<Symptom> symptomList2=new ArrayList<>();
+    public static HashSet<Integer> searchpara=new HashSet<>();
     RecyclerView recyclerView;
     SearchView msearch;
     Button diagnose,reset;
@@ -410,9 +408,11 @@ public class MainActivity extends AppCompatActivity {
         symptomList.add(new Symptom("Yellowish discoloration of the white part of the eye",106));
     }
 
+    @SuppressLint("StaticFieldLeak")
     public class FetchData extends AsyncTask<Void, Void, String> {
         boolean flag = true;
-        String result = "";
+        StringBuffer response = new StringBuffer();
+        String result="";
         private ProgressDialog dialog;
 
         public FetchData(MainActivity activity) {
@@ -443,9 +443,9 @@ public class MainActivity extends AppCompatActivity {
                     String line = "";
                     while (line != null) {
                         line = bufferedReader.readLine();
-                        result = result + line;
+                        response.append(line);
                     }
-                    object1= new JSONObject(result);
+                    object1= new JSONObject(response.toString());
                     result= object1.getString("Token");
                     return result;
                 }

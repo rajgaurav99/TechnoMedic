@@ -1,25 +1,23 @@
 package android.example.technomedic;
 
 import android.content.Context;
-import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.LinearLayout;
 import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.cardview.widget.CardView;
 import androidx.core.content.ContextCompat;
 import androidx.recyclerview.widget.RecyclerView;
 import java.util.ArrayList;
-import java.util.HashSet;
 import java.util.Locale;
-import java.util.Set;
 
 
 public class SymptomAdapter extends RecyclerView.Adapter<SymptomAdapter.SymptomViewHolder>{
 
+    @SuppressWarnings("CanBeFinal")
     private Context mCtx;
+    @SuppressWarnings("CanBeFinal")
     private ArrayList<Symptom> symptomList;
 
     public SymptomAdapter(Context mCtx, ArrayList<Symptom> symptomList) {
@@ -33,7 +31,7 @@ public class SymptomAdapter extends RecyclerView.Adapter<SymptomAdapter.SymptomV
     @Override
     public SymptomAdapter.SymptomViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         LayoutInflater inflater = LayoutInflater.from(mCtx);
-        View view = inflater.inflate(R.layout.symptom_layout, null);
+        View view = inflater.inflate(R.layout.symptom_layout, parent,false);
         return new SymptomViewHolder(view);
     }
 
@@ -83,10 +81,10 @@ public class SymptomAdapter extends RecyclerView.Adapter<SymptomAdapter.SymptomV
 
     class SymptomViewHolder extends RecyclerView.ViewHolder {
 
-        TextView mname;
+        final TextView mname;
 
-        CardView mrel;
-      public SymptomViewHolder(View itemView) {
+        final CardView mrel;
+      SymptomViewHolder(View itemView) {
             super(itemView);
             mname = itemView.findViewById(R.id.symptom_name);
             mrel=itemView.findViewById(R.id.symptom_card);
@@ -96,10 +94,10 @@ public class SymptomAdapter extends RecyclerView.Adapter<SymptomAdapter.SymptomV
 
 
     public void filter(String charText) {
-        charText = charText.toLowerCase();
-        ArrayList<Symptom> arraylist=new ArrayList<Symptom>(MainActivity.symptomList2);
+        charText = charText.toLowerCase().replaceAll("[*0-9]", "");
+        ArrayList<Symptom> arraylist=new ArrayList<>(MainActivity.symptomList2);
         MainActivity.symptomList.clear();
-        if (charText.length() == 0) {
+        if (charText.length() == 0 ) {
             MainActivity.setup();
             for (Symptom wp : MainActivity.symptomList) {
                 if (MainActivity.searchpara.contains(wp.getId())) {

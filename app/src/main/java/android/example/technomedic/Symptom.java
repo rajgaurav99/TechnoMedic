@@ -1,8 +1,8 @@
 package android.example.technomedic;
 
-public class Symptom {
-    private String name;
-    private int id;
+class Symptom {
+    private final String name;
+    private final int id;
     private boolean added;
 
     public Symptom(String name,int id){

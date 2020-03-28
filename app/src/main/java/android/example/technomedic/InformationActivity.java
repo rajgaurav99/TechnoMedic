@@ -4,12 +4,13 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.annotation.SuppressLint;
 import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.widget.Toast;
-import com.google.android.material.snackbar.Snackbar;
+
 import org.json.JSONArray;
 import org.json.JSONObject;
 import java.io.BufferedReader;
@@ -20,8 +21,9 @@ import java.net.URL;
 import java.util.ArrayList;
 
 
+@SuppressWarnings("ALL")
 public class InformationActivity extends AppCompatActivity {
-    public static  ArrayList<Disease> diseaseList=new ArrayList<Disease>();
+    public static  ArrayList<Disease> diseaseList=new ArrayList<>();
     RecyclerView recyclerView;
     DiseaseAdapter mAdapter;
     @Override
@@ -43,9 +45,10 @@ public class InformationActivity extends AppCompatActivity {
         recyclerView.setAdapter(mAdapter);
     }
 
+    @SuppressLint("StaticFieldLeak")
     public class FetchData extends AsyncTask<String, Void, ArrayList<Disease>> {
         boolean flag = true;
-        String result = "";
+        StringBuffer response=new StringBuffer();
         private ProgressDialog dialog;
 
         public FetchData(InformationActivity activity) {
@@ -61,7 +64,7 @@ public class InformationActivity extends AppCompatActivity {
 
         @Override
         protected ArrayList<Disease> doInBackground(String... params) {
-            ArrayList<Disease> arrayresult=new ArrayList<Disease>();
+            ArrayList<Disease> arrayresult=new ArrayList<>();
             String token=params[0];
             String symptoms=params[1];
             String gender=params[2];
@@ -80,10 +83,10 @@ public class InformationActivity extends AppCompatActivity {
                     String line = "";
                     while (line != null) {
                         line = bufferedReader.readLine();
-                        result = result + line;
+                        response.append(line);
                     }
 
-                    array= new JSONArray(result);
+                    array= new JSONArray(response.toString());
                     for(int i=0;i<array.length();i++){
                         object1=array.getJSONObject(i);
                         object2=object1.getJSONObject("Issue");
@@ -92,11 +95,11 @@ public class InformationActivity extends AppCompatActivity {
                         String proname=object2.getString("ProfName");
                         double accuracy=object2.getDouble("Accuracy");
                         object3=object1.getJSONArray("Specialisation");
-                        String spec="";
+                        StringBuffer spec=new StringBuffer();
                         for(int j=0;j<object3.length();j++){
-                            spec+=(j+1)+". "+object3.getJSONObject(j).getString("Name")+"\n";
+                            spec.append((j+1)+". "+object3.getJSONObject(j).getString("Name")+"\n");
                         }
-                        arrayresult.add(new Disease(name,proname,accuracy,desc,spec));
+                        arrayresult.add(new Disease(name,proname,accuracy,desc,spec.toString()));
                     }
 
                      return arrayresult;
@@ -113,11 +116,16 @@ public class InformationActivity extends AppCompatActivity {
             if (dialog.isShowing()) {
                 dialog.dismiss();
             }
+            if(backresult.size()==0){
+                Toast.makeText(getApplicationContext(), "Invalid combinaton of Symptoms", Toast.LENGTH_LONG).show();
+                finish();
+            }
             if (flag) {
                 diseaseList.addAll(backresult);
                 mAdapter.notifyDataSetChanged();
             } else {
                 Toast.makeText(getApplicationContext(), "An error occurred", Toast.LENGTH_LONG).show();
+                finish();
             }
         }
 

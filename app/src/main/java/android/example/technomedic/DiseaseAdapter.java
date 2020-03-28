@@ -11,7 +11,9 @@ import androidx.recyclerview.widget.RecyclerView;
 import java.util.ArrayList;
 
 public class DiseaseAdapter extends RecyclerView.Adapter<DiseaseAdapter.DiseaseViewHolder> {
+    @SuppressWarnings("CanBeFinal")
     private Context mCtx;
+    @SuppressWarnings("CanBeFinal")
     private ArrayList<Disease> diseaseList;
 
     public DiseaseAdapter(Context mCtx, ArrayList<Disease> diseaseList) {
@@ -25,7 +27,7 @@ public class DiseaseAdapter extends RecyclerView.Adapter<DiseaseAdapter.DiseaseV
     @Override
     public DiseaseAdapter.DiseaseViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         LayoutInflater inflater = LayoutInflater.from(mCtx);
-        View view = inflater.inflate(R.layout.disease_layout, null);
+        View view = inflater.inflate(R.layout.disease_layout, parent,false);
         return new DiseaseAdapter.DiseaseViewHolder(view);
     }
 
@@ -37,7 +39,9 @@ public class DiseaseAdapter extends RecyclerView.Adapter<DiseaseAdapter.DiseaseV
         holder.mdesc.setText(disease.getDesc());
         holder.mspec.setText(disease.getSpec());
         holder.mprogressbar.setProgress((int)disease.getAccuracy());
-        holder.macc.setText("Accuracy: "+disease.getAccuracy()+"%");
+        double accuracy=disease.getAccuracy();
+        String accuracy_data="Accuracy: "+accuracy+"%";
+        holder.macc.setText(accuracy_data);
     }
 
     @Override
@@ -57,9 +61,13 @@ public class DiseaseAdapter extends RecyclerView.Adapter<DiseaseAdapter.DiseaseV
 
     class DiseaseViewHolder extends RecyclerView.ViewHolder {
 
-        TextView mname,mproname,mdesc,mspec,macc;
-        ProgressBar mprogressbar;
-        public DiseaseViewHolder(View itemView) {
+        final TextView mname;
+        final TextView mproname;
+        final TextView mdesc;
+        final TextView mspec;
+        final TextView macc;
+        final ProgressBar mprogressbar;
+        DiseaseViewHolder(View itemView) {
             super(itemView);
             mname = itemView.findViewById(R.id.disease_name);
             mproname=itemView.findViewById(R.id.pro_disease);
