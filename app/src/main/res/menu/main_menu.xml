@@ -4,6 +4,6 @@
     <item
         android:id="@+id/action_dev"
         android:icon="@drawable/dev"
-        android:title="Developer"
-        app:showAsAction="ifRoom"></item>
+        android:title="@string/dev_title"
+        app:showAsAction="ifRoom" />
 </menu>
