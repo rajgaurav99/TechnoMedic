@@ -8,4 +8,13 @@
     <string name="male">Male</string>
     <string name="select_gender">Select your gender:</string>
     <string name="select_age">Enter your Age</string>
+    <string name="dev_dp">Developer Image</string>
+    <string name="dev_title">Developer Profile</string>
+    <string name="dev_name">Name: Gaurav Kumar Singh</string>
+    <string name="dev_edu">Education: Pursuing B.tech at VIT University</string>
+    <string name="dev_email">Email: rajgaurav99@gmail.com</string>
+    <string name="github_desc">Link to github page</string>
+    <string name="linkedin_desc">Link to linkedin page</string>
+    <string name="kaggle_desc">Link to kaggle page</string>
+    <string name="profile_link">Tap following buttons to view profiles:</string>
 </resources>
